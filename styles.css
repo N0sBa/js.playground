@@ -1,3 +1,33 @@
 body {
-  background: orange;
+  background: whitesmoke;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.card {
+  width: 80%;
+  background: white;
+  border: 1px whitesmoke solid;
+  border-radius: 5px;
+  box-shadow: 0px 0.5px 5px gray;
+  padding: 10px;
+}
+
+.card__header {
+  border-bottom: 1px black solid;
+}
+
+.card__content {
+}
+
+.img__profile {
+  width: 50px;
+  height: 50px;
+  margin-top: 5px;
+  object-fit: cover;
+  border-radius: 50%;
 }
