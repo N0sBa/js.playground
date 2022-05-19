@@ -1,87 +1,61 @@
-class DOMHelepr {
-  static clearEventListeners(element) {
-    const cloneElement = element.cloneNode(true);
-    element.replaceWith(cloneElement);
-    return cloneElement;
-  }
+// class App {
+//   static init() {
+//     const div = document.getElementById('div');
+//     const btn = div.querySelector('button');
+//     div.addEventListener(
+//       'click',
+//       (event) => {
+//         console.log('clicked div');
+//         console.dir(event);
+//       },
+//       true
+//     );
 
-  static moveElement(elementId, newDestinationSelector) {
-    const element = document.getElementById(elementId);
-    const destinationSelector = document.querySelector(newDestinationSelector);
-    destinationSelector.append(element);
-  }
-}
+//     btn.addEventListener('click', (event) => {
+//       // event.stopPropagation();
+//       console.log('clicked btn');
+//       console.dir(event);
+//       console.log(this);
+//     });
+//   }
+// }
 
-class ToolTip {}
+// App.init();
+const div = document.getElementById('div');
+const btn = div.querySelector('button');
+div.addEventListener('click', (event) => {
+  console.log('clicked div');
+});
 
-class ProjectItem {
-  constructor(id, updateProjectList, type) {
-    this.id = id;
-    // console.log(id)
-    this.updateProjectListHandler = updateProjectList;
-    this.connectMoreInfoButton();
-    this.connectSwitchButton(type);
-  }
-  connectMoreInfoButton() {}
+btn.addEventListener('click', function (event) {
+  // event.stopPropagation();
+  console.log('clicked btn');
+});
 
-  connectSwitchButton(type) {
-    const projectItemElement = document.getElementById(this.id);
-    let switchBtn = projectItemElement.querySelector('button:last-of-type');
-    switchBtn = DOMHelepr.clearEventListeners(switchBtn);
-    switchBtn.textContent = type === 'active' ? 'Finish' : 'Active';
-    switchBtn.addEventListener(
-      'click',
-      this.updateProjectListHandler.bind(null, this.id)
-    );
-  }
+btn.addEventListener('dragstart', (event) => {
+  console.log(event);
+});
 
-  update(updateProjectFn, type) {
-    this.updateProjectListHandler = updateProjectFn;
-    this.connectSwitchButton(type);
-  }
-}
+const dropArea = document.querySelector('.dropArea');
+dropArea.addEventListener('dragenter', (event) => {
+  event.preventDefault();
+  console.log('drag enter');
+  console.log(event);
+});
 
-class ProjectList {
-  projects = [];
-  constructor(type) {
-    this.type = type;
-    const prjItems = document.querySelectorAll(`#${type}-projects li`);
-    for (const prjItem of prjItems) {
-      this.projects.push(
-        new ProjectItem(prjItem.id, this.switchProject.bind(this), type)
-      );
-    }
-  }
+dropArea.addEventListener('dragover', (event) => {
+  event.preventDefault();
+  console.log('drop over');
+  console.log(event);
+});
 
-  setSwitchHadnlerFunction(switchHandlerFunction) {
-    this.switchHandler = switchHandlerFunction;
-  }
+const ul = document.querySelector('ul');
+// ul.addEventListener('click', (event) => {
+//   console.log(event.target);
+//   event.target.closest('li').classList.toggle('highlight');
+// });
 
-  addProject(project) {
-    this.projects.push(project);
-    console.log(this.type);
-    DOMHelepr.moveElement(project.id, `#${this.type}-projects ul`);
-    project.update(this.switchProject.bind(this), this.type);
-  }
-
-  switchProject(projectId) {
-    this.switchHandler(this.projects.find((item) => item.id === projectId));
-    this.projects = this.projects.filter((item) => item.id !== projectId);
-  }
-}
-
-class App {
-  static init() {
-    const activeProjects = new ProjectList('active');
-    console.log(activeProjects);
-    const finishedProjects = new ProjectList('finished');
-    activeProjects.setSwitchHadnlerFunction(
-      finishedProjects.addProject.bind(finishedProjects)
-    );
-    finishedProjects.setSwitchHadnlerFunction(
-      activeProjects.addProject.bind(activeProjects)
-    );
-  }
-}
-
-App.init();
+ul.onclick = function (event) {
+  console.log(event.target);
+  event.target.closest('li').classList.toggle('highlight');
+};

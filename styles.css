@@ -124,3 +124,14 @@ button:active {
   color: white;
   margin: 0;
 }
+
+.highlight {
+  background-color: red;
+  color: white;
+}
+
+.dropArea {
+  background-color: blue;
+  width: 200px;
+  height: 200px;
+}
