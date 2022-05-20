@@ -1,61 +1,48 @@
-// class App {
-//   static init() {
-//     const div = document.getElementById('div');
-//     const btn = div.querySelector('button');
-//     div.addEventListener(
-//       'click',
-//       (event) => {
-//         console.log('clicked div');
-//         console.dir(event);
-//       },
-//       true
-//     );
+console.log('Start');
 
-//     btn.addEventListener('click', (event) => {
-//       // event.stopPropagation();
-//       console.log('clicked btn');
-//       console.dir(event);
-//       console.log(this);
-//     });
-//   }
-// }
+function setTimer(duration, message) {
+  const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(message);
+    }, duration);
+  });
+  return promise;
+}
 
-// App.init();
-const div = document.getElementById('div');
-const btn = div.querySelector('button');
-div.addEventListener('click', (event) => {
-  console.log('clicked div');
-});
+function getLocation() {
+  const promise = new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      (success) => {
+        resolve(success);
+      },
+      (error) => {
+        reject(error);
+      }
+    );
+  });
+  return promise;
+}
 
-btn.addEventListener('click', function (event) {
-  // event.stopPropagation();
-  console.log('clicked btn');
-});
+// setTimer(2000, 'hello1').then((data) => console.log(data));
+// getLocation().then((data) => console.log(data));
 
-btn.addEventListener('dragstart', (event) => {
-  console.log(event);
-});
-
-const dropArea = document.querySelector('.dropArea');
-dropArea.addEventListener('dragenter', (event) => {
-  event.preventDefault();
-  console.log('drag enter');
-  console.log(event);
-});
-
-dropArea.addEventListener('dragover', (event) => {
-  event.preventDefault();
-  console.log('drop over');
-  console.log(event);
-});
-
-const ul = document.querySelector('ul');
-// ul.addEventListener('click', (event) => {
-//   console.log(event.target);
-//   event.target.closest('li').classList.toggle('highlight');
-// });
-
-ul.onclick = function (event) {
-  console.log(event.target);
-  event.target.closest('li').classList.toggle('highlight');
-};
+setTimer(2000, 'hello2')
+  .then(
+    (resData) => {
+      console.log(resData);
+      return getLocation();
+    },
+    (err) => {
+      console.log(err);
+    }
+  )
+  .then(
+    (resData) => {
+      console.log(resData);
+    },
+    (err) => {
+      console.log(err);
+    }
+  );
+setTimer(1000, 'hello1').then((data) => console.log(data));
+console.log('loading...');
