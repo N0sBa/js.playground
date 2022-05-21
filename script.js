@@ -26,23 +26,65 @@ function getLocation() {
 // setTimer(2000, 'hello1').then((data) => console.log(data));
 // getLocation().then((data) => console.log(data));
 
-setTimer(2000, 'hello2')
-  .then(
-    (resData) => {
-      console.log(resData);
-      return getLocation();
-    },
-    (err) => {
-      console.log(err);
-    }
-  )
-  .then(
-    (resData) => {
-      console.log(resData);
-    },
-    (err) => {
-      console.log(err);
-    }
-  );
-setTimer(1000, 'hello1').then((data) => console.log(data));
-console.log('loading...');
+// (async function () {
+//   setTimer(2000, 'hello2')
+//     .then(
+//       (resData) => {
+//         console.log(resData);
+//         return getLocation();
+//       },
+//       (err) => {
+//         console.log(err);
+//       }
+//     )
+//     .then(
+//       (resData) => {
+//         console.log(resData);
+//       },
+//       (err) => {
+//         console.log(err);
+//       }
+//     );
+
+//   console.log('loading...');
+// })();
+
+// async function init() {
+//   let location;
+//   let timer;
+//   try {
+//     location = await getLocation();
+//     timer = await setTimer(2000, 'Hello world');
+//   } catch (error) {
+//     console.log('errot: ', error);
+//   }
+//   console.log('location: ', location);
+//   console.log('setimer: ', timer);
+//   console.log('loading...');
+// }
+// init();
+
+// Promise.race([getLocation(), setTimer(1000, 'Hello world')]).then((data) => {
+//   console.log('promise race: ', data);
+// });
+
+// Promise.all([getLocation(), setTimer(1000, 'Hello world')]).then((data) => {
+//   console.log('promise all: ', data);
+// });
+
+// Promise.allSettled([getLocation(), setTimer(1000, 'Hello world')]).then(
+//   (data) => {
+//     console.log('promise all settled: ', data);
+//   }
+// );
+
+const myPromise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('Timer completed!');
+  }, 1000);
+})
+  .then((text) => {
+    throw new Error('Failed!');
+  })
+  .catch((err) => console.log('error', err))
+  .then(() => console.log('Does that execute?'));
